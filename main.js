@@ -190,7 +190,7 @@ phina.define('GraphGroup',{
     c.circ.tweenerF._tasks.forEach(set);
     c.circ.t2._tasks.forEach(set);
 
-    c.orbit = Sprite(o).addChildTo(c).setOrigin(0, 0.25);
+    c.orbit = Sprite(AssetManager.assets.image[this.easing]).addChildTo(c).setOrigin(0, 0.25);
     c.orbit.x = -SCALE;
     c.circ.addChildTo(c);
     
