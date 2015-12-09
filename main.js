@@ -422,7 +422,7 @@ phina.main(function() {
       height:640,
       width: 960,
       assets:{image:asset},
-      domElement:document.createElement('canvas')
+      //domElement:document.createElement('canvas')
     });
     
   
