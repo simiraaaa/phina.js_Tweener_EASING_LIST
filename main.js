@@ -74,24 +74,80 @@ phina.define('MainScene', {
       
     });
     
+
+    LinkIcon({ stroke: 'green', fill: 'green' }).addChildTo(this)
+    //.setOrigin(0,0)
+    .setScale(0.5, 0.5)
+    .setPosition(125, 23)
+    .setOpenURL('http://phinajs.com').
+    tweenerF.to({
+      scaleX: 0.5,
+      scaleY: 0.5,
+      rotation: 0,
+    }, 60, 'easeOutElastic').to({
+      scaleX: 0.3,
+      scaleY: 0.3,
+      rotation: 45,
+    }, 60, 'easeInElastic')
+    .setLoop(true);
+
     Label({
-      text:"phina.js easing list",
-      fontSize:30,
-      baseline:"top",
-      align:"left",
-      fill:"lime",
+      text: "phina.js        easing list",
+      fontSize: 30,
+      baseline: "top",
+      align: "left",
+      fill: "lime",
       stroke: 'black',
-      strokeWidth:8,
-    }).addChildTo(this).setPosition(4,2);
-    
+      strokeWidth: 8,
+    }).addChildTo(this).setPosition(8, 2);
+
     Label({
-      text:"Click graph to enlarge!",
-      fontSize:28,
-      baseline:"top",
-      fill:"aqua",
+      text: "Click graph to enlarge!",
+      fontSize: 28,
+      baseline: "top",
+      fill: "aqua",
       stroke: 'black',
-      strokeWidth:8,
-    }).addChildTo(this).setPosition(o.width/2,2);
+      strokeWidth: 8,
+    }).addChildTo(this).setPosition(o.width / 2, 2);
+    var tb = Button({
+      text: "Tweet!",
+      height: 30,
+      width: 120,
+      fontSize: 24,
+      fontWeight: 'bold'
+    }).addChildTo(this).setPosition(840, 15);
+    tb.onpointend = function(e) {
+      open(Twitter.createURL({
+        text: 'phina.js Tweenerで使えるEASINGアニメーションがひと目でわかる!',
+        url: "http://simiraaaa.github.io/phina.js_Tweener_EASING_LIST/",
+
+        // 最後に @simiraaaa さんから
+        via: "simiraaaa",
+
+        // #tag ,区切り
+        hashtags: "phina_js,tweener",
+
+        // ?
+        related: "simiraaaa",
+
+        // リプライ?
+        //screen_name:"simiraaaa",
+      }), '', 'width=600px,height=400px');
+    };
+
+    var hateb = Button({
+      text: "B!",
+      fill: "blue",
+      height: 30,
+      width: 40,
+      fontSize: 24,
+      fontWeight: 'bold'
+    }).addChildTo(this).setPosition(935, 15);
+
+    hateb.onpointend = function(e) {
+      open("http://b.hatena.ne.jp/entry/simiraaaa.github.io/phina.js_Tweener_EASING_LIST/", '',
+      'width=940px,height=600px');
+    };
     
   },
   
