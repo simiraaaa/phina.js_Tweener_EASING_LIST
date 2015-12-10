@@ -453,6 +453,108 @@ phina.define('TweenTriangle',{
   }
 });
 
+
+phina.define('LinkIcon', {
+  superClass: phina.display.Shape,
+  linkName: '',
+  linkOptions: '',
+  init: function(options) {
+
+    options = (options || {}).$safe(LinkIcon.defaults);
+
+    this.superInit(options);
+
+    this.lineCap = options.lineCap;
+    this.arrowWidth = options.arrowWidth;
+    this.arrowRadius = options.arrowRadius;
+    this.cornerRadius = options.cornerRadius;
+
+    this.setInteractive(true);
+    this.on('pointend', function() {
+      this.flare('push');
+    });
+  },
+
+  setOpenURL: function(url, name, options) {
+    this.url = url;
+    this.linkName = name || '';
+    this.linkOptions = options || '';
+    this.on('push', this.open);
+    return this;
+  },
+
+  open: function() {
+    open(this.url, this.linkName, this.linkOptions);
+    return this;
+  },
+
+  _render: function() {
+    var canvas = this.canvas;
+    var c = canvas.context;
+
+    this._renderBackground();
+
+    canvas.transformCenter();
+    // stroke
+    if (this.stroke) {
+      c.lineWidth = this.strokeWidth;
+      c.strokeStyle = this.stroke;
+      canvas.strokeRoundRect(
+        -this.width / 2 * 0.8, -this.height / 2 * 0.8,
+        this.width * 0.8, this.height * 0.8,
+        this.cornerRadius);
+    }
+
+    c.save();
+
+    c.globalCompositeOperation = 'destination-out';
+    c.lineWidth = this.arrowWidth * 4;
+    c.strokeStyle = 'black';
+    canvas.drawLine(0, 0, this.width / 2, -this.height / 2);
+
+    // 背景色設定時投下されるため対策
+    if (this.backgroundColor !== 'transparent') {
+      c.globalCompositeOperation = 'source-over';
+      c.strokeStyle = this.backgroundColor;
+      canvas.drawLine(0, 0, this.width / 2, -this.height / 2);
+    }
+    c.restore();
+
+    c.lineWidth = this.arrowWidth;
+    c.strokeStyle = this.stroke;
+    c.fillStyle = this.fill;
+    c.lineCap = this.lineCap;
+    canvas.drawArrow(0, 0, this.width / 2, -this.height / 2, this.arrowRadius);
+
+
+  },
+
+  _static: {
+    defaults: {
+      fill: 'black',
+      width: 60,
+      height: 60,
+      backgroundColor: 'transparent',
+      stroke: 'black',
+      strokeWidth: 6,
+      cornerRadius: 10,
+      arrowWidth: 6,
+      arrowRadius: 12,
+      lineCap: 'round',
+    },
+
+    _shapeProperty: [
+      // _dirtyDraw = true にするアクセサ定義できたらいいな
+      'lineCap',
+      'arrowWidth',
+      'arrowRadius',
+
+    ]
+
+  }
+});
+
+
 /*
  * メイン処理
  */
